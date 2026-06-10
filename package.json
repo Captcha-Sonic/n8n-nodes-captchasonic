@@ -1,0 +1,95 @@
+{
+  "name": "n8n-nodes-captchasonic",
+  "version": "1.1.0",
+  "description": "Official n8n nodes for CaptchaSonic — AI-powered CAPTCHA solving",
+  "keywords": [
+    "n8n-community-node-package",
+    "n8n",
+    "n8n-node",
+    "captchasonic",
+    "captcha",
+    "captcha-solver",
+    "anti-captcha",
+    "bypass-captcha",
+    "recaptcha",
+    "recaptcha-v2",
+    "recaptcha-v3",
+    "recaptcha-enterprise",
+    "popularcaptcha",
+    "cloudflare-turnstile",
+    "turnstile",
+    "geetest",
+    "geetest-v3",
+    "geetest-v4",
+    "datadome",
+    "aws-waf",
+    "mtcaptcha",
+    "tencent-captcha",
+    "tiktok-captcha",
+    "binance-captcha",
+    "prosopo",
+    "captchafox",
+    "image-to-text",
+    "ocr",
+    "captcha-automation",
+    "workflow-automation",
+    "ai-captcha",
+    "ai"
+  ],
+  "license": "MIT",
+  "homepage": "https://captchasonic.com",
+  "author": {
+    "name": "CaptchaSonic",
+    "email": "support@captchasonic.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Captcha-Sonic/n8n-nodes-captchasonic.git"
+  },
+  "engines": {
+    "node": ">=20.15"
+  },
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc && gulp build:icons",
+    "dev": "tsc --watch",
+    "format": "prettier nodes credentials --write",
+    "lint": "ESLINT_USE_FLAT_CONFIG=false eslint nodes credentials",
+    "lintfix": "ESLINT_USE_FLAT_CONFIG=false eslint nodes credentials --fix",
+    "prepublishOnly": "npm run build && npm run lint -c .eslintrc.prepublish.js nodes credentials package.json",
+    "release": "standard-version",
+    "release:minor": "standard-version --release-as minor",
+    "release:major": "standard-version --release-as major",
+    "release:patch": "standard-version --release-as patch",
+    "release:prerelease": "standard-version --prerelease",
+    "release:alpha": "standard-version --prerelease alpha",
+    "release:beta": "standard-version --prerelease beta",
+    "release:dry-run": "standard-version --dry-run"
+  },
+  "files": [
+    "dist"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": [
+      "dist/credentials/CaptchaSonicApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/CaptchaSonic/CaptchaSonic.node.js"
+    ]
+  },
+  "devDependencies": {
+    "@n8n/node-cli": "^0.34.0",
+    "@types/node": "^24.7.2",
+    "@typescript-eslint/parser": "~8.35.0",
+    "eslint": "^9.29.0",
+    "eslint-plugin-n8n-nodes-base": "^1.16.3",
+    "gulp": "^5.0.0",
+    "prettier": "^3.5.3",
+    "standard-version": "^9.5.0",
+    "typescript": "^5.8.2"
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  }
+}
