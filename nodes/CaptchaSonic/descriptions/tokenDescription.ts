@@ -93,44 +93,24 @@ export const tokenDescriptions: INodeProperties[] = [
 		description: 'The task type for Cloudflare Turnstile',
 	},
 
-	// GeeTest V3
+	// GeeTest (V3 and V4 share the same task types)
 	{
 		displayName: 'Task Type',
 		name: 'type',
 		type: 'options',
-		default: TaskTypes.GeeTestV3TaskProxyLess,
+		default: TaskTypes.GeeTestTaskProxyLess,
 		required: true,
 		displayOptions: {
 			show: {
 				resource: [resourceToken],
-				operation: [captchaTypes.geeTestV3],
+				operation: [captchaTypes.geeTestV3, captchaTypes.geeTestV4],
 			},
 		},
 		options: [
-			{ name: 'GeeTestV3TaskProxyLess', value: TaskTypes.GeeTestV3TaskProxyLess },
-			{ name: 'GeeTestV3Task', value: TaskTypes.GeeTestV3Task },
+			{ name: 'GeeTestTaskProxyLess', value: TaskTypes.GeeTestTaskProxyLess },
+			{ name: 'GeeTestTask', value: TaskTypes.GeeTestTask },
 		],
-		description: 'The task type for GeeTest V3',
-	},
-
-	// GeeTest V4
-	{
-		displayName: 'Task Type',
-		name: 'type',
-		type: 'options',
-		default: TaskTypes.GeeTestV4TaskProxyLess,
-		required: true,
-		displayOptions: {
-			show: {
-				resource: [resourceToken],
-				operation: [captchaTypes.geeTestV4],
-			},
-		},
-		options: [
-			{ name: 'GeeTestV4TaskProxyLess', value: TaskTypes.GeeTestV4TaskProxyLess },
-			{ name: 'GeeTestV4Task', value: TaskTypes.GeeTestV4Task },
-		],
-		description: 'The task type for GeeTest V4',
+		description: 'The task type for GeeTest. V3/V4 is determined by the fields you provide.',
 	},
 
 	// DataDome
@@ -275,6 +255,17 @@ export const tokenDescriptions: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: [resourceToken],
+				operation: [
+					captchaTypes.recaptchaV2,
+					captchaTypes.recaptchaV3,
+					captchaTypes.popularCaptcha,
+					captchaTypes.cloudflareTurnstile,
+					captchaTypes.awsWaf,
+					captchaTypes.mtCaptcha,
+					captchaTypes.tencentCaptcha,
+					captchaTypes.captchaFox,
+					captchaTypes.prosopo,
+				],
 			},
 		},
 		description: 'The sitekey / website key for the CAPTCHA widget',
@@ -334,7 +325,7 @@ export const tokenDescriptions: INodeProperties[] = [
 		description: 'The challenge parameter from GeeTest V3',
 	},
 	{
-		displayName: 'Captcha ID',
+		displayName: 'Website Key',
 		name: 'captchaId',
 		type: 'string',
 		default: '',
@@ -344,7 +335,7 @@ export const tokenDescriptions: INodeProperties[] = [
 				operation: [captchaTypes.geeTestV4],
 			},
 		},
-		description: 'The captcha_id parameter from GeeTest V4',
+		description: 'The captcha_id (website key) parameter from GeeTest V4',
 	},
 
 	// ─── DataDome-specific Fields ───

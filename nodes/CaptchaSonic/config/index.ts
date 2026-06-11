@@ -56,11 +56,9 @@ export enum TaskTypes {
 	// Token: Cloudflare
 	AntiTurnstileTaskProxyLess = 'AntiTurnstileTaskProxyLess',
 
-	// Token: GeeTest
-	GeeTestV3Task = 'GeeTestV3Task',
-	GeeTestV3TaskProxyLess = 'GeeTestV3TaskProxyLess',
-	GeeTestV4Task = 'GeeTestV4Task',
-	GeeTestV4TaskProxyLess = 'GeeTestV4TaskProxyLess',
+	// Token: GeeTest (V3/V4 share the same task type, version is determined by fields)
+	GeeTestTask = 'GeeTestTask',
+	GeeTestTaskProxyLess = 'GeeTestTaskProxyLess',
 
 	// Token: DataDome
 	DatadomeSliderTask = 'DatadomeSliderTask',

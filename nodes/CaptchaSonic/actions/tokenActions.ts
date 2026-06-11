@@ -63,13 +63,29 @@ function buildTaskData(taskData: any): any {
 		websiteURL: taskData.websiteURL,
 	};
 
-	if (taskData.websiteKey) task.websiteKey = taskData.websiteKey;
+	const taskType = (taskData.taskType || '').toLowerCase();
+	const isGeeTest = taskType.includes('geetest');
+	const isDataDome = taskType.includes('datadome');
+
+	// websiteKey: not used by GeeTest or DataDome
+	if (taskData.websiteKey && !isGeeTest && !isDataDome) {
+		task.websiteKey = taskData.websiteKey;
+	}
+
 	if (taskData.proxy) task.proxy = taskData.proxy;
 	if (taskData.userAgent) task.userAgent = taskData.userAgent;
-	if (taskData.gt) task.gt = taskData.gt;
-	if (taskData.challenge) task.challenge = taskData.challenge;
-	if (taskData.captchaId) task.captchaId = taskData.captchaId;
-	if (taskData.captchaUrl) task.captchaUrl = taskData.captchaUrl;
+
+	// GeeTest fields (V3 uses gt/challenge, V4 uses captchaId — UI controls visibility)
+	if (isGeeTest) {
+		if (taskData.gt) task.gt = taskData.gt;
+		if (taskData.challenge) task.challenge = taskData.challenge;
+		if (taskData.captchaId) task.captchaId = taskData.captchaId;
+	}
+
+	// DataDome specific field
+	if (isDataDome) {
+		if (taskData.captchaUrl) task.captchaUrl = taskData.captchaUrl;
+	}
 
 	// Process optional fields
 	if (taskData.optional) {
