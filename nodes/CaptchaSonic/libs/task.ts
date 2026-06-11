@@ -1,4 +1,4 @@
-import { IExecuteFunctions, NodeOperationError } from 'n8n-workflow';
+import { IExecuteFunctions, NodeApiError, NodeOperationError } from 'n8n-workflow';
 import { API_URL } from '../config';
 
 export class Task {
@@ -36,10 +36,7 @@ export class Task {
 			return response;
 		} catch (error: any) {
 			if (error instanceof NodeOperationError) throw error;
-			throw new NodeOperationError(
-				this.executeFunctions.getNode(),
-				`Failed to create task: ${error.message}`,
-			);
+			throw new NodeApiError(this.executeFunctions.getNode(), error);
 		}
 	}
 
@@ -64,10 +61,7 @@ export class Task {
 			});
 		} catch (error: any) {
 			if (error instanceof NodeOperationError) throw error;
-			throw new NodeOperationError(
-				this.executeFunctions.getNode(),
-				`Failed to get task result: ${error.message}`,
-			);
+			throw new NodeApiError(this.executeFunctions.getNode(), error);
 		}
 	}
 }

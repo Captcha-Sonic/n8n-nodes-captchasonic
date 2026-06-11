@@ -1,5 +1,5 @@
 import { INodeProperties } from 'n8n-workflow';
-import { captchaTypes, resourceToken } from '../config';
+import { resourceToken } from '../config';
 
 /**
  * Optional/advanced field definitions shared across operations.

@@ -22,7 +22,7 @@ export class CaptchaSonic implements INodeType {
 		group: ['transform'],
 		version: [1],
 		subtitle: '={{$parameter["operation"]}} - {{$parameter["type"]}}',
-		description: 'AI-powered CAPTCHA solving — Supports reCAPTCHA, popularcaptcha, Turnstile, GeeTest, DataDome, AWS WAF, and more',
+		description: 'AI-powered CAPTCHA solving — supports reCAPTCHA, popularcaptcha, Turnstile, GeeTest, DataDome, AWS WAF, and more',
 		defaults: {
 			name: 'CaptchaSonic',
 		},

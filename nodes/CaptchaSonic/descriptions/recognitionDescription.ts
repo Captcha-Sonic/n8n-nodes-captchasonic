@@ -22,7 +22,7 @@ export const recognitionDescriptions: INodeProperties[] = [
 			},
 		},
 		options: [
-			{ name: 'ImageToTextTask', value: TaskTypes.ImageToTextTask },
+			{ name: 'Image to Text', value: TaskTypes.ImageToTextTask },
 		],
 		description: 'OCR task type for converting image to text',
 	},
@@ -41,7 +41,7 @@ export const recognitionDescriptions: INodeProperties[] = [
 			},
 		},
 		options: [
-			{ name: 'ReCaptchaV2Classification', value: TaskTypes.ReCaptchaV2Classification },
+			{ name: 'reCAPTCHA V2 Classification', value: TaskTypes.ReCaptchaV2Classification },
 		],
 		description: 'Classification task for reCAPTCHA v2 image challenges',
 	},
@@ -60,7 +60,7 @@ export const recognitionDescriptions: INodeProperties[] = [
 			},
 		},
 		options: [
-			{ name: 'PopularCaptchaClassification', value: TaskTypes.PopularCaptchaClassification },
+			{ name: 'PopularCaptcha Classification', value: TaskTypes.PopularCaptchaClassification },
 		],
 		description: 'Classification task for PopularCaptcha image challenges',
 	},
@@ -79,7 +79,7 @@ export const recognitionDescriptions: INodeProperties[] = [
 			},
 		},
 		options: [
-			{ name: 'AwsWafClassification', value: TaskTypes.AwsWafClassification },
+			{ name: 'AWS WAF Classification', value: TaskTypes.AwsWafClassification },
 		],
 		description: 'Classification task for AWS WAF challenges',
 	},
@@ -98,7 +98,7 @@ export const recognitionDescriptions: INodeProperties[] = [
 			},
 		},
 		options: [
-			{ name: 'BLSTask', value: TaskTypes.BLSTask },
+			{ name: 'BLS / OCR', value: TaskTypes.BLSTask },
 		],
 		description: 'OCR task for BLS and similar text CAPTCHAs',
 	},
@@ -117,7 +117,7 @@ export const recognitionDescriptions: INodeProperties[] = [
 			},
 		},
 		options: [
-			{ name: 'TikTokTask', value: TaskTypes.TikTokTask },
+			{ name: 'TikTok CAPTCHA', value: TaskTypes.TikTokTask },
 		],
 		description: 'Recognition task for TikTok CAPTCHAs (slide, circle, click)',
 	},
@@ -136,7 +136,7 @@ export const recognitionDescriptions: INodeProperties[] = [
 			},
 		},
 		options: [
-			{ name: 'BinanceTask', value: TaskTypes.BinanceTask },
+			{ name: 'Binance CAPTCHA', value: TaskTypes.BinanceTask },
 		],
 		description: 'Recognition task for Binance puzzle CAPTCHAs',
 	},
@@ -155,7 +155,7 @@ export const recognitionDescriptions: INodeProperties[] = [
 			},
 		},
 		options: [
-			{ name: 'VisionEngine', value: TaskTypes.VisionEngine },
+			{ name: 'Vision Engine', value: TaskTypes.VisionEngine },
 		],
 		description: 'AI vision engine for complex image challenges',
 	},
