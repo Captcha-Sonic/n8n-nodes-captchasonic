@@ -1,128 +1,382 @@
-# CaptchaSonic n8n Node — AI CAPTCHA Solver for Workflow Automation
+# CaptchaSonic — AI CAPTCHA Solver Node for n8n Workflow Automation
 
 [![npm version](https://img.shields.io/npm/v/n8n-nodes-captchasonic)](https://www.npmjs.com/package/n8n-nodes-captchasonic)
 [![npm downloads](https://img.shields.io/npm/dm/n8n-nodes-captchasonic)](https://www.npmjs.com/package/n8n-nodes-captchasonic)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE.md)
+[![n8n community node](https://img.shields.io/badge/n8n-community%20node-ff6d5a)](https://www.npmjs.com/package/n8n-nodes-captchasonic)
 
-**CaptchaSonic** is the official n8n community node for AI-powered CAPTCHA solving. It supports reCAPTCHA v2/v3, PopularCaptcha, Cloudflare Turnstile, GeeTest V3/V4, DataDome, AWS WAF, and 15+ more types — directly inside your n8n automation workflows. No proxies needed for ProxyLess task types.
+> **Solve any CAPTCHA inside n8n** — reCAPTCHA v2/v3, Cloudflare Turnstile, GeeTest, AWS WAF, DataDome, TikTok, and 20+ more types. AI-powered, no proxies required.
 
-## Installation
+**CaptchaSonic** is the official n8n community node for automated CAPTCHA solving. It integrates directly into your n8n workflows to handle reCAPTCHA v2, reCAPTCHA v3, reCAPTCHA Enterprise, PopularCaptcha, Cloudflare Turnstile, GeeTest V3/V4, DataDome Slider, AWS WAF, MTCaptcha, Tencent CAPTCHA, CaptchaFox, Prosopo/Procaptcha, and image recognition (OCR, classification) — all without writing code.
 
-Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes/installation/) in the n8n community nodes documentation.
+---
 
-Or install directly in n8n:
-1. Go to **Settings → Community Nodes → Install**
+## ⚡ Quick Start
+
+### Install in n8n (30 seconds)
+
+1. Open n8n → **Settings** → **Community Nodes** → **Install**
 2. Enter `n8n-nodes-captchasonic`
-3. Click Install
+3. Click **Install** — done!
 
-## Credentials
+Or follow the [n8n community nodes installation guide](https://docs.n8n.io/integrations/community-nodes/installation/).
 
-You need a CaptchaSonic API key to use this node.
+### Get Your API Key
 
-1. Register for an account at [my.captchasonic.com](https://my.captchasonic.com)
+1. Sign up at **[my.captchasonic.com](https://my.captchasonic.com)** (free credits included)
 2. Copy your API key from the dashboard
-3. In n8n, go to **Credentials → New → CaptchaSonic API**
-4. Paste your API key and save
+3. In n8n → **Credentials** → **New** → **CaptchaSonic API** → paste key → **Save**
 
-## Why CaptchaSonic vs Other n8n CAPTCHA Nodes?
+### Solve Your First CAPTCHA
 
-| Feature | CaptchaSonic | Traditional Solvers | API-based Solvers |
-|---|:---:|:---:|:---:|
-| ProxyLess task types | ✅ | ✅ | ✅ |
-| GeeTest V4 | ✅ | ⚠️ Partial | ✅ |
-| Cloudflare Turnstile | ✅ | ⚠️ Partial | ✅ |
-| AWS WAF | ✅ | ❌ | ⚠️ Partial |
-| Prosopo / Procaptcha | ✅ | ❌ | ❌ |
-| AI-powered solving engine | ✅ | ❌ | ❌ |
-| Official n8n integration | ✅ | Community | Community |
+```
+Manual Trigger → CaptchaSonic → HTTP Request
+```
+
+1. Add a **CaptchaSonic** node
+2. Set **Resource** = `Token`, **Operation** = `reCAPTCHA v2`
+3. Enter the target site URL and site key
+4. Execute — get back a solved token in seconds
+
+---
+
+## 🆚 Why CaptchaSonic for n8n?
+
+| Feature | CaptchaSonic | CapSolver | 2Captcha | Anti-Captcha |
+|:---|:---:|:---:|:---:|:---:|
+| **Official n8n node** | ✅ | ✅ | ❌ | ❌ |
+| **ProxyLess solving** | ✅ | ✅ | ⚠️ Limited | ⚠️ Limited |
+| **reCAPTCHA v2/v3** | ✅ | ✅ | ✅ | ✅ |
+| **reCAPTCHA Enterprise** | ✅ | ✅ | ⚠️ Partial | ✅ |
+| **Cloudflare Turnstile** | ✅ | ✅ | ⚠️ Partial | ⚠️ Partial |
+| **GeeTest V4** | ✅ | ✅ | ⚠️ Partial | ❌ |
+| **AWS WAF** | ✅ | ✅ | ❌ | ❌ |
+| **DataDome** | ✅ | ✅ | ❌ | ❌ |
+| **Prosopo / Procaptcha** | ✅ | ❌ | ❌ | ❌ |
+| **TikTok CAPTCHA** | ✅ | ❌ | ❌ | ❌ |
+| **Image classification** | ✅ | ✅ | ✅ | ✅ |
+| **AI-powered engine** | ✅ | ✅ | ❌ | ❌ |
+| **Ready-made workflow templates** | ✅ | ✅ | ❌ | ❌ |
+| **Avg. solve time** | ~8s | ~12s | ~20s | ~15s |
+
+---
 
 ## 🎯 Supported CAPTCHA Types
 
-### Token (Async Polling)
+### Token-Based (Async Polling)
 
-These captcha types return a token after solving. The node creates a task and polls until the solution is ready.
+The node creates a task, polls every 3 seconds, and returns the solved token. Timeout: 120 seconds.
 
-| CAPTCHA Type | Task Types |
-|:---|:---|
-| reCAPTCHA v2 | `ReCaptchaV2Task`, `ReCaptchaV2TaskProxyLess`, Enterprise variants |
-| reCAPTCHA v3 | `ReCaptchaV3Task`, `ReCaptchaV3TaskProxyLess`, Enterprise variants |
-| PopularCaptcha | `PopularCaptchaTask`, `PopularCaptchaTaskProxyLess`, Enterprise variants |
-| Cloudflare Turnstile | `AntiTurnstileTaskProxyLess` |
-| GeeTest V3 | `GeeTestV3Task`, `GeeTestV3TaskProxyLess` |
-| GeeTest V4 | `GeeTestV4Task`, `GeeTestV4TaskProxyLess` |
-| DataDome | `DatadomeSliderTask` |
-| AWS WAF | `AntiAwsWafTask`, `AntiAwsWafTaskProxyLess` |
-| MTCaptcha | `MtCaptchaTask`, `MtCaptchaTaskProxyLess` |
-| Tencent CAPTCHA | `TencentTask`, `TencentTaskProxyLess` |
-| CaptchaFox | `CaptchaFoxTask`, `CaptchaFoxTaskProxyLess` |
-| Prosopo / Procaptcha | `ProsopoTask`, `ProsopoTaskProxyLess` |
+| CAPTCHA Type | Task Types | Proxy Required? |
+|:---|:---|:---:|
+| **reCAPTCHA v2** | `ReCaptchaV2Task`, `ReCaptchaV2TaskProxyLess`, `ReCaptchaV2EnterpriseTask`, `ReCaptchaV2EnterpriseTaskProxyLess` | Optional |
+| **reCAPTCHA v3** | `ReCaptchaV3Task`, `ReCaptchaV3TaskProxyLess`, `ReCaptchaV3EnterpriseTask`, `ReCaptchaV3EnterpriseTaskProxyLess` | Optional |
+| **PopularCaptcha** | `PopularCaptchaTask`, `PopularCaptchaTaskProxyLess`, `PopularCaptchaEnterpriseTask`, `PopularCaptchaEnterpriseTaskProxyLess` | Optional |
+| **Cloudflare Turnstile** | `AntiTurnstileTaskProxyLess` | No |
+| **GeeTest V3** | `GeeTestTask`, `GeeTestTaskProxyLess` | Optional |
+| **GeeTest V4** | `GeeTestTask`, `GeeTestTaskProxyLess` | Optional |
+| **DataDome Slider** | `DatadomeSliderTask` | Yes |
+| **AWS WAF** | `AntiAwsWafTask`, `AntiAwsWafTaskProxyLess` | Optional |
+| **MTCaptcha** | `MtCaptchaTask`, `MtCaptchaTaskProxyLess` | Optional |
+| **Tencent CAPTCHA** | `TencentTask`, `TencentTaskProxyLess` | Optional |
+| **CaptchaFox** | `CaptchaFoxTask`, `CaptchaFoxTaskProxyLess` | Optional |
+| **Prosopo / Procaptcha** | `ProsopoTask`, `ProsopoTaskProxyLess` | Optional |
 
-### Recognition (Immediate)
+### Image Recognition (Immediate Response)
 
-These captcha types return the result immediately — no polling required.
+These return the result instantly — no polling, no waiting.
 
-| CAPTCHA Type | Task Type |
-|:---|:---|
-| Image To Text | `ImageToTextTask` |
-| reCAPTCHA v2 Classification | `ReCaptchaV2Classification` |
-| PopularCaptcha Classification | `PopularCaptchaClassification` |
-| AWS WAF Classification | `AwsWafClassification` |
-| BLS / OCR | `BLSTask` |
-| TikTok CAPTCHA | `TikTokTask` |
-| Binance CAPTCHA | `BinanceTask` |
-| Vision Engine | `VisionEngine` |
+| CAPTCHA Type | Task Type | Input |
+|:---|:---|:---|
+| **Image To Text** | `ImageToTextTask` | Base64 image |
+| **reCAPTCHA v2 Classification** | `ReCaptchaV2Classification` | Image grid + question |
+| **PopularCaptcha Classification** | `PopularCaptchaClassification` | Image + question + choices |
+| **AWS WAF Classification** | `AwsWafClassification` | Image + question |
+| **BLS / OCR** | `BLSTask` | Image(s) + module |
+| **TikTok CAPTCHA** | `TikTokTask` | Image + question |
+| **Binance CAPTCHA** | `BinanceTask` | Image + question |
+| **Vision Engine** | `VisionEngine` | Image + prompt |
 
-## 📖 Usage
+---
 
-1. Add the **CaptchaSonic** node to your workflow
-2. Select the **Resource**: `Token` or `Recognition`
-3. Select the **Operation**: the specific CAPTCHA type
-4. Configure the required parameters (Website URL, Site Key, etc.)
-5. Click **Execute step** to solve
+## 📖 Usage Examples
 
-### Example: Solve reCAPTCHA v2 in n8n
+### Example 1: Solve reCAPTCHA v2 and Submit a Form
 
 ```
-Manual Trigger → CaptchaSonic (reCAPTCHA v2, ProxyLess) → HTTP Request (submit form with token)
+Webhook (POST) → CaptchaSonic (reCAPTCHA v2) → HTTP Request (submit form) → Respond to Webhook
 ```
 
-Configure the CaptchaSonic node:
+**CaptchaSonic node config:**
 - **Resource:** Token
 - **Operation:** reCAPTCHA v2
-- **Task Type:** ReCaptchaV2TaskProxyLess
+- **Task Type:** `ReCaptchaV2TaskProxyLess`
 - **Website URL:** `https://example.com/login`
-- **Website Key:** `6Le-...` (found in page source)
+- **Website Key:** `6Le-wvkSAAAAAPBMRTvw0Q4Muexq9bi0DJwx_mJ-`
 
-The node returns `{ "token": "03AGdBq25..." }` — pass this to your next step.
+**Output:** `{ "solution": { "gRecaptchaResponse": "03AGdBq25..." } }`
 
-## FAQ
+### Example 2: Bypass Cloudflare Turnstile Protection
 
-**How do I install this node in n8n?**
-Go to Settings → Community Nodes → Install, and enter `n8n-nodes-captchasonic`.
+```
+Schedule Trigger (every 1h) → CaptchaSonic (Turnstile) → HTTP Request (access protected page) → Process Data
+```
 
-**Do I need a proxy to solve reCAPTCHA?**
-No. Use the `ProxyLess` task types (e.g. `ReCaptchaV2TaskProxyLess`) and CaptchaSonic handles everything server-side.
+**CaptchaSonic node config:**
+- **Resource:** Token
+- **Operation:** Cloudflare Turnstile
+- **Task Type:** `AntiTurnstileTaskProxyLess`
+- **Website URL:** `https://protected-site.com`
+- **Website Key:** `0x4AAAAAAA...`
 
-**What CAPTCHA types are supported?**
-reCAPTCHA v2/v3 (including Enterprise), PopularCaptcha, Cloudflare Turnstile, GeeTest V3/V4, DataDome, AWS WAF, MTCaptcha, TikTok CAPTCHA, Binance CAPTCHA, Prosopo, CaptchaFox, and image recognition types.
+### Example 3: OCR — Read Text from CAPTCHA Image
 
-**How long does solving take?**
-Token tasks are polled every 3 seconds with a 120-second timeout. Most tasks solve in under 15 seconds.
+```
+Manual Trigger → Set Image (base64) → CaptchaSonic (Image To Text) → Format Result
+```
 
-**What is the difference between Token and Recognition tasks?**
-Token tasks (reCAPTCHA, PopularCaptcha, etc.) return a token string you submit to the target website. Recognition tasks (image classification, OCR) return the text or classification result immediately.
+**CaptchaSonic node config:**
+- **Resource:** Recognition
+- **Operation:** Image To Text
+- **Task Type:** `ImageToTextTask`
+- **Image:** `{{ $json.imageBase64 }}`
 
-**Is there a free trial?**
-Yes — register at [my.captchasonic.com](https://my.captchasonic.com) to get started.
+**Output:** `{ "solution": { "text": "Xk9pQ2" } }`
 
-**Where can I get my API key?**
-Log in to [my.captchasonic.com](https://my.captchasonic.com) and find your API key in the dashboard.
+### Example 4: Classify reCAPTCHA v2 Image Grid
+
+```
+Webhook → CaptchaSonic (reCAPTCHA v2 Classification) → Respond to Webhook
+```
+
+**CaptchaSonic node config:**
+- **Resource:** Recognition
+- **Operation:** reCAPTCHA v2 Classification
+- **Image:** base64-encoded 3×3 grid
+- **Question:** `traffic lights`
+
+**Output:** `{ "solution": { "objects": [true, false, true, ...] } }`
+
+---
+
+## 🔧 Ready-Made Workflow Templates
+
+Import these directly into n8n — each includes a webhook endpoint, manual test trigger, and hardcoded sample images for one-click testing.
+
+| Workflow | CAPTCHA Type | Mode | Webhook Path |
+|:---|:---|:---|:---|
+| [`recaptcha-v2.json`](sonic-workflows/recaptcha-v2.json) | reCAPTCHA v2 Classification | Recognition | `/solve-recaptcha-v2` |
+| [`bls-ocr.json`](sonic-workflows/bls-ocr.json) | BLS / OCR | Recognition | `/solve-bls-ocr` |
+| [`popularcaptcha.json`](sonic-workflows/popularcaptcha.json) | PopularCaptcha Classification | Recognition | `/solve-popularcaptcha` |
+| [`mtcaptcha.json`](sonic-workflows/mtcaptcha.json) | MTCaptcha OCR | Recognition | `/solve-mtcaptcha` |
+| [`tiktok.json`](sonic-workflows/tiktok.json) | TikTok CAPTCHA | Recognition | `/solve-tiktok` |
+
+### How to Use a Template
+
+1. Download the `.json` file
+2. In n8n → **Workflows** → **Import from File**
+3. Add your **CaptchaSonic API** credential to the CaptchaSonic nodes
+4. Click **Manual Trigger** → **Test Workflow** to verify it works
+5. Activate the webhook for production use
+
+---
+
+## ⚙️ Node Parameters Reference
+
+### Token Resource
+
+| Parameter | Required | Description |
+|:---|:---:|:---|
+| **Operation** | ✅ | CAPTCHA type (reCAPTCHA v2, Turnstile, etc.) |
+| **Task Type** | ✅ | Specific task variant (ProxyLess, Enterprise, etc.) |
+| **Website URL** | ✅ | URL of the page with the CAPTCHA |
+| **Website Key** | ✅ | Site key from the CAPTCHA element |
+| **Proxy** | ❌ | Proxy URL (only for non-ProxyLess types) |
+| **User Agent** | ❌ | Custom user agent string |
+
+**Optional fields** (varies by type):
+- `isInvisible` — for invisible reCAPTCHA
+- `apiDomain` — custom API domain
+- `pageAction` — reCAPTCHA v3 action
+- `minScore` — reCAPTCHA v3 minimum score
+- `enterprisePayload` — Enterprise additional data
+
+### Recognition Resource
+
+| Parameter | Required | Description |
+|:---|:---:|:---|
+| **Operation** | ✅ | Recognition type (Image To Text, BLS/OCR, etc.) |
+| **Task Type** | ✅ | API task type identifier |
+| **Image** | ✅ | Base64-encoded CAPTCHA image |
+| **Question** | ❌ | Classification question (e.g. "traffic lights") |
+| **Module** | ❌ | OCR module (e.g. `bls`, `mtcaptcha`) |
+| **Images 1–9** | ❌ | Additional grid images for multi-image tasks |
+
+---
+
+## ❓ FAQ
+
+<details>
+<summary><strong>How do I install CaptchaSonic in n8n?</strong></summary>
+
+Go to **Settings → Community Nodes → Install**, enter `n8n-nodes-captchasonic`, and click Install. The node will appear in your node panel immediately.
+</details>
+
+<details>
+<summary><strong>Do I need a proxy to solve reCAPTCHA?</strong></summary>
+
+No. Use `ProxyLess` task types (e.g. `ReCaptchaV2TaskProxyLess`) and CaptchaSonic handles everything server-side. Proxies are only needed for `DatadomeSliderTask` and non-ProxyLess variants.
+</details>
+
+<details>
+<summary><strong>How long does it take to solve a CAPTCHA?</strong></summary>
+
+- **Token tasks:** Polled every 3s, 120s timeout. Most solve in **5–15 seconds**.
+- **Recognition tasks:** Return immediately, typically **1–3 seconds**.
+</details>
+
+<details>
+<summary><strong>What is the difference between Token and Recognition?</strong></summary>
+
+- **Token** = the node solves a live CAPTCHA on a website and returns a token string (e.g. `gRecaptchaResponse`) that you submit to the target site.
+- **Recognition** = the node analyzes a CAPTCHA image you provide and returns the text, classification, or object detection result immediately.
+</details>
+
+<details>
+<summary><strong>Can I solve reCAPTCHA Enterprise?</strong></summary>
+
+Yes. Use `ReCaptchaV2EnterpriseTaskProxyLess` or `ReCaptchaV3EnterpriseTaskProxyLess`. Set the `enterprisePayload` field if the site requires additional parameters.
+</details>
+
+<details>
+<summary><strong>How do I solve Cloudflare Turnstile in n8n?</strong></summary>
+
+Add a CaptchaSonic node → set **Operation** to `Cloudflare Turnstile` → set **Task Type** to `AntiTurnstileTaskProxyLess` → enter the Website URL and Website Key → execute. The node returns the Turnstile token.
+</details>
+
+<details>
+<summary><strong>Does CaptchaSonic support GeeTest V4?</strong></summary>
+
+Yes. Use **Operation** = `GeeTest V4` with `GeeTestTaskProxyLess`. Provide the `captchaId` and `websiteURL`. The node returns `captcha_id`, `lot_number`, `pass_token`, `gen_time`, and `captcha_output`.
+</details>
+
+<details>
+<summary><strong>How do I solve AWS WAF CAPTCHAs?</strong></summary>
+
+Use **Operation** = `AWS WAF` with `AntiAwsWafTaskProxyLess`. The node returns a session cookie you pass to subsequent HTTP requests via the `Cookie` header.
+</details>
+
+<details>
+<summary><strong>Is there a free trial?</strong></summary>
+
+Yes — sign up at [my.captchasonic.com](https://my.captchasonic.com) to get free credits for testing.
+</details>
+
+<details>
+<summary><strong>Where do I find the Website Key for a CAPTCHA?</strong></summary>
+
+Open the browser DevTools (F12) on the target page and search for `sitekey`, `data-sitekey`, or `data-widget-id` in the HTML. The value is typically a long alphanumeric string.
+</details>
+
+<details>
+<summary><strong>Can I use this node in n8n Cloud?</strong></summary>
+
+Yes. CaptchaSonic works on both self-hosted n8n and n8n Cloud. Install it as a community node from Settings.
+</details>
+
+<details>
+<summary><strong>What happens if solving fails?</strong></summary>
+
+The node throws an error by default. Enable **Continue On Fail** in node settings to handle errors gracefully in your workflow.
+</details>
+
+---
+
+## 🏗️ Architecture
+
+```
+┌─────────────────────────────────────────────────┐
+│                  n8n Workflow                    │
+│                                                 │
+│  ┌──────────┐   ┌──────────────┐   ┌─────────┐ │
+│  │ Trigger  │──▶│ CaptchaSonic │──▶│ Use     │ │
+│  │ (any)    │   │    Node      │   │ Result  │ │
+│  └──────────┘   └──────┬───────┘   └─────────┘ │
+│                        │                         │
+└────────────────────────┼─────────────────────────┘
+                         │
+                         ▼
+              ┌──────────────────┐
+              │  CaptchaSonic    │
+              │  API Server      │
+              │                  │
+              │  ┌────────────┐  │
+              │  │ AI Engine  │  │
+              │  └────────────┘  │
+              └──────────────────┘
+```
+
+**Token flow:** `createTask` → poll `getTaskResult` every 3s → return solution
+**Recognition flow:** `createTask` → immediate result (no polling)
+
+---
+
+## 🛠️ Development
+
+```bash
+# Clone the repo
+git clone https://github.com/Captcha-Sonic/n8n-nodes-captchasonic.git
+cd n8n-nodes-captchasonic
+
+# Install dependencies
+npm install
+
+# Build
+npm run build
+
+# Watch mode
+npm run dev
+
+# Lint
+npm run lint
+```
+
+### Link for Local Testing
+
+```bash
+# In this project
+npm link
+
+# In your n8n installation
+cd ~/.n8n/nodes
+npm link n8n-nodes-captchasonic
+
+# Restart n8n
+```
+
+---
 
 ## 📝 Resources
 
-- [CaptchaSonic](https://captchasonic.com)
-- [CaptchaSonic Dashboard](https://my.captchasonic.com)
-- [CaptchaSonic Docs](https://docs.captchasonic.com)
-- [Discord Community](https://discord.captchasonic.com)
-- [Telegram](https://telegram.captchasonic.com)
-- [n8n Community Nodes](https://docs.n8n.io/integrations/community-nodes/)
+| Resource | Link |
+|:---|:---|
+| 🌐 **Website** | [captchasonic.com](https://captchasonic.com) |
+| 📊 **Dashboard** | [my.captchasonic.com](https://my.captchasonic.com) |
+| 📚 **API Docs** | [docs.captchasonic.com](https://docs.captchasonic.com) |
+| 💬 **Discord** | [discord.captchasonic.com](https://discord.captchasonic.com) |
+| ✈️ **Telegram** | [telegram.captchasonic.com](https://telegram.captchasonic.com) |
+| 📦 **npm** | [npmjs.com/package/n8n-nodes-captchasonic](https://www.npmjs.com/package/n8n-nodes-captchasonic) |
+| 🔗 **n8n Docs** | [n8n Community Nodes](https://docs.n8n.io/integrations/community-nodes/) |
+
+---
+
+## 📄 License
+
+[MIT](LICENSE.md) © [CaptchaSonic](https://captchasonic.com)
+
+---
+
+<p align="center">
+  <strong>Built with ❤️ by <a href="https://captchasonic.com">CaptchaSonic</a></strong><br>
+  <sub>The fastest AI-powered CAPTCHA solver for n8n workflow automation</sub>
+</p>
